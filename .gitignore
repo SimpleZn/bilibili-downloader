@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.ipynb_checkpoints
+
+# Virtual Environment
+.venv/
+env/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Logs
+*.log
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# Local Development
+.env
+.env.local
+
+# Build Artifacts
+*.mo
+pot/
+
+# uv specific
+.uv/
+
+# Output directories
+output/

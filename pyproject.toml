@@ -1,0 +1,14 @@
+[project]
+name = "voice_prescribe"
+version = "0.1.0"
+description = "Voice-based medical prescription system"
+authors = [{name = "Your Name", email = "your.email@example.com"}]
+requires-python = ">=3.8"
+dependencies = []
+
+[build-system]
+requires = ["uv>=0.1.0"]
+build-backend = "uv.core.build"
+
+[tool.uv]
+dev-dependencies = ["pytest","mypy","black","isort","python-dotenv"]
