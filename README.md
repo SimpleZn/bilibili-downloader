@@ -23,7 +23,7 @@ A Python tool to download videos and audio from Bilibili with metadata preservat
 
 ## Installation
 ```bash
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 ## Cookie Setup (For Private/Protected Content)
@@ -36,9 +36,9 @@ python src/bilibili_downloader.py BV1xx411c7mh --sessdata YOUR_SESSDATA
 
 ## Installation & Usage
 
-**Install requirements:**
+**Install requirements (UV):**
 ```bash
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 **Basic commands:**

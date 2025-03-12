@@ -63,7 +63,7 @@ class BilibiliDownloader:
         os.makedirs(temp_dir, exist_ok=True)
 
         # Get playback URL
-        play_url = f'https://api.bilibili.com/x/player/playurl?bvid={bvid}&cid={video_info['cid']}&qn={quality}&fnval=4048'
+        play_url = f"https://api.bilibili.com/x/player/playurl?bvid={bvid}&cid={video_info['cid']}&qn={quality}&fnval=4048"
         response = requests.get(play_url, headers=self.headers, cookies=self.cookies)
         play_data = response.json()
 
