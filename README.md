@@ -1,89 +1,113 @@
-# Bilibili Video Downloader
+# Bilibili Video Downloader GUI
 
-**Features**:
-- Supports both BVids and direct URLs
-- Multiple output formats (MP4/FLV/MP3)
-- Quality selection (480p-1080p)
-- Cookie authentication for private content
-- Automatic temp file cleanup
-
-A Python tool to download videos and audio from Bilibili with metadata preservation and format conversion.
+A simple GUI application for downloading videos and their audio tracks from Bilibili.com.
 
 ## Features
-- Download high-quality videos with audio
-- Extract and preserve video metadata
-- Convert audio to MP3 format
-- Handle age-restricted/content-protected videos
-- Progress tracking with resumable downloads
-- Automatic directory organization
+
+- Download Bilibili videos by URL or BVID.
+- Saves both a video file (e.g., MP4) and a separate MP3 audio file.
+- GUI for settings:
+    - SESSDATA cookie for accessing HD formats and login-required content.
+    - Video quality selection.
+    - Video output format (e.g., mp4, mkv - defaults to mp4 if an audio format like mp3 is entered).
+    - Custom path to FFmpeg executable.
+    - Custom download directory (defaults to your system's Downloads folder, organizing files into `Bilibili_Downloads/VideoTitle/`).
+- Progress bar and status messages during download.
+- Ability to stop ongoing downloads.
 
 ## Prerequisites
-- Python 3.6+
-- FFmpeg (must be installed and added to system PATH)
 
-## Installation
+1.  **Python 3**: Ensure you have Python 3 installed. (Tested with Python 3.12+)
+2.  **FFmpeg**: This application requires FFmpeg for merging video/audio streams and converting audio to MP3.
+    -   **macOS (with Homebrew)**: `brew install ffmpeg`
+    -   **Other OS**: Download from [ffmpeg.org](https://ffmpeg.org/download.html) and ensure it's in your system's PATH or provide the full path in the application settings.
+
+## Setup and Installation
+
+1.  **Clone the Repository (if applicable) or Download Files**:
+    ```bash
+    # If you have it as a git repo
+    # git clone <repository_url>
+    # cd <repository_directory>
+    ```
+
+2.  **Create a Virtual Environment (Recommended)**:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    ```
+
+3.  **Install Dependencies**:
+    Make sure you have a `requirements.txt` file with the following content:
+    ```txt
+    PyQt5
+    py2app
+    requests
+    tqdm
+    ```
+    Then run:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Running the Application
+
+### Option 1: Directly from Python (for development/testing)
+
 ```bash
-uv pip install -r requirements.txt
+python3 src/main_app.py
 ```
 
-## Cookie Setup (For Private/Protected Content)
-1. Login to Bilibili in your browser
-2. Use developer tools (F12) to copy the `SESSDATA` cookie value
-3. Use cookie with:
-```bash
-python src/bilibili_downloader.py BV1xx411c7mh --sessdata YOUR_SESSDATA
-```
+### Option 2: Building a macOS App Bundle
 
-## Installation & Usage
+1.  **Create an Icon (Optional but Recommended)**:
+    -   Create an icon file named `icon.icns` in the root directory of the project. You can use online converters to create an `.icns` file from a PNG.
 
-**Install requirements (UV):**
-```bash
-uv pip install -r requirements.txt
-```
+2.  **Build the App**:
+    The `setup.py` file is configured to use `py2app`.
+    ```bash
+    python3 setup.py py2app -A  # Alias mode for faster development builds
+    # For a distributable app, you might use:
+    # python3 setup.py py2app
+    ```
 
-**Basic commands:**
-```bash
-# Using BVid or URL
-python src/bilibili_downloader.py BV1xx411c7mh
-python src/bilibili_downloader.py 'https://www.bilibili.com/video/BV1xx411c7mh'
+3.  **Run the App**:
+    The application bundle (`Bilibili Downloader.app`) will be created in the `dist` directory. Double-click it to run.
 
-# Quality selection (80=1080p, 64=720p, 32=480p)
-python src/bilibili_downloader.py BV1xx411c7mh -q 64
+## First Time Use & Settings
 
-# Format options (mp4/flv/mp3)
-python src/bilibili_downloader.py BV1xx411c7mh -f flv
-```
+1.  **Authorization (SESSDATA)**:
+    -   On first launch (or if `SESSDATA` is not configured), an authorization window will appear.
+    -   Click "Open Bilibili Login" to go to the Bilibili login page in your browser.
+    -   After logging in, you need to retrieve the `SESSDATA` cookie:
+        1.  In your browser (e.g., Chrome, Firefox), open Developer Tools (usually by right-clicking on the page and selecting "Inspect" or pressing F12).
+        2.  Go to the "Application" (Chrome) or "Storage" (Firefox) tab.
+        3.  Under "Cookies", find `https://www.bilibili.com`.
+        4.  Locate the cookie named `SESSDATA` and copy its "Value".
+    -   Paste this value into the SESSDATA input field in the app and click "Submit SESSDATA".
 
-## Output Structure
-```
-output/
-└── Video_Title_Shortened/
-    ├── Video_Title_Shortened.mp4
-    ├── Video_Title_Shortened.mp3
-    └── temp/ (auto-cleaned)
-```
+2.  **Settings Page**:
+    -   After authorization, or on subsequent launches, the main settings page will appear.
+    -   **SESSDATA**: Your Bilibili SESSDATA cookie.
+    -   **Quality**: Video quality setting (e.g., 80 for 1080p, 116 for 4K - consult Bilibili standards if needed).
+    -   **Format**: Desired *video* output format (e.g., `mp4`, `mkv`). An MP3 audio file will always be generated separately. If you enter `mp3` here, the video will default to `mp4`.
+    -   **FFmpeg Path**: Full path to the `ffmpeg` executable. If `ffmpeg` is in your system PATH, you can leave this as `ffmpeg`. Use "Browse" to locate it if needed.
+    -   **Download Path**: Directory where downloaded files will be saved. Defaults to your system's "Downloads" folder. Files will be organized into `[Selected Path]/Bilibili_Downloads/[Video Title]/`.
+    -   Click "Save Settings" to save your preferences. These are stored in `~/.bilibili_downloader_config.json`.
 
-## Error Handling
-Common errors and solutions:
+## Downloading Videos
 
-| Error Code | Description | Solution |
-|------------|-------------|----------|
-| -101 | Invalid cookie | Renew SESSDATA cookie |
-| -404 | Video not found | Verify BVid/URL format |
-| 62002 | Geo-restricted | Use VPN/cookie |
-| -400 | Invalid URL/BVid | Use format: BV... or https://... |
-| -501 | FFmpeg missing | Install ffmpeg and add to PATH |
+1.  Enter the Bilibili video URL (e.g., `https://www.bilibili.com/video/BVxxxxxxxxxx`) or just the BVID (e.g., `BVxxxxxxxxxx`) into the "Bilibili Video URL or BVID" field.
+2.  Ensure your settings (quality, format, paths) are configured as desired.
+3.  Click "Download Video".
+4.  The progress bar and status area will show the download progress.
+5.  You can click "Stop Download" to cancel an ongoing download.
+6.  Completed files (video and MP3 audio) will be in your specified download path, under `Bilibili_Downloads/[Video Title]/`.
 
-## Security Considerations
-⚠️ **Important**:
-- SESSDATA cookies are **login credentials** - treat as passwords
-- Recommended cookie usage:
-  ```bash
-  # Use environment variable instead of CLI argument
-  export SESSDATA='your_cookie' && python src/bilibili_downloader.py BV...
-  ```
-- Automatically excluded from git via .gitignore
-- Session cookies expire after 30 days
+## Notes
+
+- The `output` folder in the project root is used as a fallback if the download path setting is not configured or accessible (primarily for CLI script usage).
+- The application creates a `temp` subfolder within each video's download directory for temporary files, which are cleaned up after the download (or on error/stop).
 
 ## License
 MIT License
