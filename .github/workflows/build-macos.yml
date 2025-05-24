@@ -35,9 +35,15 @@ jobs:
       - name: Build the macOS app
         run: python3 setup.py py2app # Full build, not alias mode
 
+      - name: Create ZIP of the .app Bundle
+        run: |
+          cd dist
+          zip -r Bilibili-Downloader-macOS.zip "Bilibili Downloader.app"
+          cd ..
+
       - name: Upload macOS App Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Bilibili-Downloader-macOS
-          path: dist/Bilibili Downloader.app
+          path: dist/Bilibili-Downloader-macOS.zip # Upload the created ZIP file
           if-no-files-found: error # Error if the app is not found 
