@@ -1,14 +1,16 @@
 import sys
 import webbrowser
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox, QTextEdit, QProgressBar, QFileDialog
-from PyQt5.QtCore import QThread, pyqtSignal, QStandardPaths
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QVBoxLayout, QHBoxLayout, QMessageBox, QTextEdit, QProgressBar, QFileDialog, QInputDialog, QMainWindow, QScrollArea
+from PyQt5.QtCore import QThread, pyqtSignal, QStandardPaths, Qt
+from PyQt5.QtGui import QIcon
 import os
 import json
 import traceback
 import threading
+import charset_normalizer # Dummy import to help py2app
 
 # Import downloader class and bvid extraction
-from bilibili_downloader import BilibiliDownloader, extract_bvid
+from src.bilibili_downloader import BilibiliDownloader, extract_bvid
 
 
 CONFIG_FILE = os.path.expanduser("~/.bilibili_downloader_config.json")
@@ -352,19 +354,6 @@ class AuthWindow(QWidget):
 def main():
     app = QApplication(sys.argv)
     config = load_config()
-
-    # Ensure src is in python path if running as script or for py2app
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    if current_dir not in sys.path:
-        sys.path.insert(0, current_dir)
-    
-    # Try to import again, in case it's not in the top-level of where py2app looks
-    try:
-        from bilibili_downloader import BilibiliDownloader, extract_bvid
-    except ImportError:
-         QMessageBox.critical(None, "Import Error", f"Failed to import BilibiliDownloader. Ensure bilibili_downloader.py is in the same directory as main_app.py or in the Python path. Current path: {sys.path}")
-         sys.exit(1)
-
 
     if not config.get("SESSDATA"):
         auth_window = AuthWindow()

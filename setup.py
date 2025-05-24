@@ -3,9 +3,9 @@ from setuptools import setup
 APP = ['src/main_app.py']
 DATA_FILES = []
 OPTIONS = {
-    'argv_emulation': True,
-    'packages': ['requests', 'tqdm', 'PyQt5', 'src'],
-    'iconfile': 'icon.icns', # You'll need to create an icon file
+    'argv_emulation': False,
+    'packages': ['requests', 'tqdm', 'PyQt5', 'src', 'charset_normalizer'],
+    # 'iconfile': 'src/bilibili_downloader.icns',
     'plist': {
         'CFBundleName': 'Bilibili Downloader',
         'CFBundleDisplayName': 'Bilibili Downloader',

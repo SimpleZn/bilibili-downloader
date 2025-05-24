@@ -11,6 +11,7 @@ dist/
 # Virtual Environment
 .venv/
 env/
+venv/
 
 # Testing
 .coverage
