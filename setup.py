@@ -5,7 +5,7 @@ DATA_FILES = []
 OPTIONS = {
     'argv_emulation': False,
     'packages': ['requests', 'tqdm', 'PyQt5', 'src', 'charset_normalizer'],
-    # 'iconfile': 'src/bilibili_downloader.icns',
+    'iconfile': 'src/bilibili_downloader.icns',
     'plist': {
         'CFBundleName': 'Bilibili Downloader',
         'CFBundleDisplayName': 'Bilibili Downloader',
