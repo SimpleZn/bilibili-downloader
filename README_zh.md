@@ -1,3 +1,5 @@
+阅读语言: [English](README.md) | [中文](README_zh.md)
+
 # Bilibili 视频下载器 GUI
 
 一个用于从 Bilibili.com 下载视频及其音轨的简单 GUI 应用程序。

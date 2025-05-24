@@ -1,3 +1,5 @@
+Read this in: [English](README.md) | [中文](README_zh.md)
+
 # Bilibili Video Downloader GUI
 
 A simple GUI application for downloading videos and their audio tracks from Bilibili.com.
