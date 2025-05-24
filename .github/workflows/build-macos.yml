@@ -5,10 +5,16 @@ on:
     branches:
       - main
       - master # In case your default branch is master
+    paths:
+      - 'src/**'
+      - '.github/workflows/build-macos.yml' # Also run if workflow itself changes
   pull_request:
     branches:
       - main
       - master
+    paths:
+      - 'src/**'
+      - '.github/workflows/build-macos.yml' # Also run if workflow itself changes
   workflow_dispatch: # Allows manual triggering
 
 jobs:
