@@ -90,10 +90,19 @@ python3 src/main_app.py
     -   After authorization, or on subsequent launches, the main settings page will appear.
     -   **SESSDATA**: Your Bilibili SESSDATA cookie.
     -   **Quality**: Video quality setting (e.g., 80 for 1080p, 116 for 4K - consult Bilibili standards if needed).
-    -   **Format**: Desired *video* output format (e.g., `mp4`, `mkv`). An MP3 audio file will always be generated separately. If you enter `mp3` here, the video will default to `mp4`.
+    -   **Format**: Desired *video* output format. Common choices include `mp4`, `mkv`, `mov`, `avi`, `flv`, `webm`. An MP3 audio file will always be generated separately. If you enter an audio-only format like `mp3` here, the video will default to `mp4`.
     -   **FFmpeg Path**: Full path to the `ffmpeg` executable. If `ffmpeg` is in your system PATH, you can leave this as `ffmpeg`. Use "Browse" to locate it if needed.
     -   **Download Path**: Directory where downloaded files will be saved. Defaults to your system's "Downloads" folder. Files will be organized into `[Selected Path]/Bilibili_Downloads/[Video Title]/`.
     -   Click "Save Settings" to save your preferences. These are stored in `~/.bilibili_downloader_config.json`.
+
+3.  **Resetting Settings**:
+    -   If you need to reset all application settings to their defaults, you can do so by deleting the configuration file.
+    -   Close the Bilibili Downloader application.
+    -   Open your Terminal and run the following command:
+        ```bash
+        rm -f ~/.bilibili_downloader_config.json
+        ```
+    -   The next time you start the application, it will be as if it's the first launch, and a new default configuration file will be created when you save settings.
 
 ## Downloading Videos
 
